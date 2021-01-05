@@ -1,0 +1,151 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: "com.jfrog.bintray"
+
+def versionNumber = 1
+def versionString = "1.0.0"
+
+ext {
+    bintrayRepo = 'myPOSGlassSDK'
+    bintrayName = 'myposglasssdk'
+
+    publishedGroupId = 'com.mypos'
+    libraryName = 'myPOS-Glass-SDK'
+    artifact = 'glasssdk'
+
+    libraryDescription = 'This repository provides a guidance on integrating an Android app with a myPOS Smart device. Once integrated, ' +
+            'the app will be able to communicate with the core device components in order to accept card payments (including but not limited to VISA,' +
+            ' Mastercard, UnionPay International, JCB, Bancontact). myPOS-Smart-SDK complеments a Smart POS terminal in order to initiate transaction,' +
+            ' complete all steps for processing payment, make refund to the customer card account and print a custom bill slip using the device printer.' +
+            ' The built-in functionalities of myPOS-Smart-SDK allow you to send Payment Requests, manage operations for the first and second SAM component the myPOS Smart device has and print bitmap image integrated to the receipt (e.g. QR Code).'
+
+    siteUrl = 'https://github.com/developermypos/myPOS-Smart-SDK'
+    gitUrl = 'https://github.com/developermypos/myPOS-Smart-SDK.git'
+
+    libraryVersion = versionString
+
+    developerId = 'mypos'
+    developerName = 'myPOS Developers'
+    developerEmail = 'devrel@mypos.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "25.0.3"
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 30
+        versionCode versionNumber
+        version versionString
+        versionName versionString
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    libraryVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.aar')) {
+                def fileName = "${archivesBaseName}-${version}.aar"
+                output.outputFile = new File(outputFile.parent, fileName)
+            }
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile 'junit:junit:4.12'
+}
+
+group = publishedGroupId
+version = libraryVersion
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            packaging 'aar'
+            groupId publishedGroupId
+            artifactId artifact
+
+            name libraryName
+            description libraryDescription
+            url siteUrl
+
+            licenses {
+                license {
+                    name licenseName
+                    url licenseUrl
+                }
+            }
+            developers {
+                developer {
+                    id developerId
+                    name developerName
+                    email developerEmail
+                }
+            }
+            scm {
+                connection gitUrl
+                developerConnection gitUrl
+                url siteUrl
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    configurations = ['archives']
+    pkg {
+        repo = bintrayRepo
+        name = bintrayName
+        desc = libraryDescription
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = allLicenses
+        publish = true
+        version {
+            gpg {
+                sign = true //Determines whether to GPG sign the files. The default is false
+                passphrase = properties.getProperty("bintray.gpg.password") //Optional. The passphrase for GPG signing'
+            }
+        }
+    }
+}
