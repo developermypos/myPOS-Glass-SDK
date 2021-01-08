@@ -19,8 +19,8 @@ ext {
             'complete all steps for processing payment, make refund to the customer card account and send a custom bill slip via mail or SMS. ' +
             'The built-in functionalities of myPOS-Glass-SDK allows you to accept payments, make refunds and void the last approved transaction.'
 
-    siteUrl = 'https://github.com/developermypos/myPOS-Smart-SDK'
-    gitUrl = 'https://github.com/developermypos/myPOS-Smart-SDK.git'
+    siteUrl = 'https://github.com/developermypos/myPOS-Glass-SDK'
+    gitUrl = 'https://github.com/developermypos/myPOS-Glass-SDK.git'
 
     libraryVersion = versionString
 
