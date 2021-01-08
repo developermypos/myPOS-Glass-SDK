@@ -268,10 +268,6 @@ When a transaction has finished, an Intent with the following data is returned t
 * CVM - Cardholder Verification Method (P – PIN, S – Signature , N – NO CVM)
 * application_name - Application Label, read from the card chip
 * transaction_approved (boolean) - – true : approved, false : declined
-* dcc_available (boolean) - Dynamic currency conversion (DCC) available
-* amount_dcc (double) - Dynamic currency conversion (DCC) amount
-* currency_dcc - Dynamic currency conversion (DCC) currency
-* exchange_rate (double) - Dynamic currency conversion (DCC) exchange rate
 * TID - Terminal id
 * update_pending (boolean) - New update is available
 * resp_code - Payment request response code. Values, different from "00", represent the reason for a declined transaction
