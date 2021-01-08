@@ -13,11 +13,11 @@ ext {
     libraryName = 'myPOS-Glass-SDK'
     artifact = 'glasssdk'
 
-    libraryDescription = 'This repository provides a guidance on integrating an Android app with a myPOS Smart device. Once integrated, ' +
-            'the app will be able to communicate with the core device components in order to accept card payments (including but not limited to VISA,' +
-            ' Mastercard, UnionPay International, JCB, Bancontact). myPOS-Smart-SDK complеments a Smart POS terminal in order to initiate transaction,' +
-            ' complete all steps for processing payment, make refund to the customer card account and print a custom bill slip using the device printer.' +
-            ' The built-in functionalities of myPOS-Smart-SDK allow you to send Payment Requests, manage operations for the first and second SAM component the myPOS Smart device has and print bitmap image integrated to the receipt (e.g. QR Code).'
+    libraryDescription = 'This repository provides a guidance on integrating an Android app with a myPOS Glass payment solution. Once integrated, ' +
+            'the app will be able to communicate and call the main myPOS Glass functionalities in order to accept card payments (Limited to VISA and Mastercard). ' +
+            'myPOS-Glass-SDK is a bridge between the applications and myPOS Glass app, converting the smart device into a POS machine, allowing to initiate transaction, ' +
+            'complete all steps for processing payment, make refund to the customer card account and send a custom bill slip via mail or SMS. ' +
+            'The built-in functionalities of myPOS-Glass-SDK allows you to accept payments, make refunds and void the last approved transaction.'
 
     siteUrl = 'https://github.com/developermypos/myPOS-Smart-SDK'
     gitUrl = 'https://github.com/developermypos/myPOS-Smart-SDK.git'

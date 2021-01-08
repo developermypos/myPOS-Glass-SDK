@@ -15,9 +15,6 @@ public class MyPOSUtil {
     public static final String GET_SIMPLE_POS_INFO                       = "com.mypos.action.GET_SIMPLE_POS_INFO";
     public static final String GET_SIMPLE_POS_INFO_RESPONSE              = "com.mypos.broadcast.exported.SIMPLE_POS_INFO_RESPONSE";
 
-    public static final String INTENT_PRINT_MERCHANT_RECEIPT             = "print_merchant_receipt";
-    public static final String INTENT_PRINT_CUSTOMER_RECEIPT             = "print_customer_receipt";
-
     /**
      * Used to pass the transaction amount to the Payment core
      */
