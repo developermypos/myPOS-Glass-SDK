@@ -248,7 +248,7 @@ When a transaction has finished, an Intent with the following data is returned t
 * reference_number - Internal myPOS reference number for the transaction
 * cardholder_name - Emboss name on the card
 * date_time - Date and time of the transaction formatted as YYMMDDHHmmss
-* status (int) - one of the constants in the [TransactionProcessingResult](mypossmartsdk/src/main/java/com/mypos/smartsdk/TransactionProcessingResult.java) class
+* status (int) - one of the constants in the [TransactionProcessingResult](myposglasssdk/src/main/java/com/mypos/smartsdk/TransactionProcessingResult.java) class
 * status_text - a textual representation of the status
 * card_brand - MASTERCARD, MAESTRO, VISA, VISA ELECTRON, VPAY
 * card_entry_mode – method of presenting the card:
