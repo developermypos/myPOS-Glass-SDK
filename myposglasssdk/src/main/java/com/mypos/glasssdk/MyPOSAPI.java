@@ -3,14 +3,19 @@ package com.mypos.glasssdk;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.net.Uri;
 
 import com.mypos.glasssdk.data.POSInfo;
 import com.mypos.glasssdk.exceptions.FunctionalityNotSupportedException;
+
+import java.util.List;
 
 
 public class MyPOSAPI {
@@ -38,7 +43,7 @@ public class MyPOSAPI {
         );
 
         if(cursor == null || cursor.getCount() < 1) {
-            context.sendBroadcast(new Intent(MyPOSUtil.GET_SIMPLE_POS_INFO));
+            sendExplicitBroadcast(context, new Intent(MyPOSUtil.GET_SIMPLE_POS_INFO));
 
             context.registerReceiver(
                     new BroadcastReceiver() {
@@ -67,6 +72,21 @@ public class MyPOSAPI {
 
         if(!cursor.isClosed())
             cursor.close();
+    }
+
+    private static void sendExplicitBroadcast(Context context, Intent intent){
+        try{
+            PackageManager packageManager = context.getPackageManager();
+            List<ResolveInfo> resolveInfoList = packageManager.queryBroadcastReceivers(intent, 0);
+            for (ResolveInfo info : resolveInfoList) {
+                ComponentName cn = new ComponentName(info.activityInfo.packageName, info.activityInfo.name);
+                intent.setComponent(cn);
+                intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+                context.sendBroadcast(intent);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     /**
