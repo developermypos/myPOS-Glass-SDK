@@ -2,8 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: "com.jfrog.bintray"
 
-def versionNumber = 1
-def versionString = "1.0.0"
+def versionNumber = 2
+def versionString = "1.0.1"
 
 ext {
     bintrayRepo = 'myPOSGlassSDK'
@@ -56,7 +56,7 @@ android {
             def outputFile = output.outputFile
             if (outputFile != null && outputFile.name.endsWith('.aar')) {
                 def fileName = "${archivesBaseName}-${version}.aar"
-                output.outputFile = new File(outputFile.parent, fileName)
+//                output.outputFile = new File(outputFile.parent, fileName)
             }
         }
     }
