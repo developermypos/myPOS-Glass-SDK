@@ -36,7 +36,7 @@ public class MyPOSAPI {
 
         Cursor cursor = context.getContentResolver().query(
                 CONTENT_URI,
-                new String[] {"tid", "CurrencyName", "CurrencyCode", "MerchantData"},
+                new String[] {"tid", "CurrencyName", "CurrencyCode", "MerchantData", "ReleaseMode"},
                 null,
                 null,
                 null

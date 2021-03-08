@@ -11,6 +11,7 @@ public class POSInfo implements Serializable {
     private String currencyName;
     private String currencyCode;
     private MerchantData merchantData;
+    private boolean isReleaseBuild;
 
     public POSInfo() {
         TID = "";
@@ -51,6 +52,14 @@ public class POSInfo implements Serializable {
         this.merchantData = merchantData;
     }
 
+    public boolean isReleaseBuild() {
+        return isReleaseBuild;
+    }
+
+    public void setReleaseBuild(boolean releaseBuild) {
+        isReleaseBuild = releaseBuild;
+    }
+
     public Bundle asBundle() {
         Bundle ret = new Bundle();
 
@@ -58,6 +67,7 @@ public class POSInfo implements Serializable {
         ret.putString("CurrencyName", currencyName);
         ret.putString("CurrencyCode", currencyCode);
         ret.putBundle("MerchantData", merchantData.asBundle());
+        ret.putBoolean("ReleaseMode", isReleaseBuild);
 
         return ret;
     }
@@ -67,6 +77,7 @@ public class POSInfo implements Serializable {
         currencyName = ret.getString("CurrencyName");
         currencyCode = ret.getString("CurrencyCode");
         merchantData.parseFromBundle(ret.getBundle("MerchantData"));
+        isReleaseBuild = ret.getInt("ReleaseMode", 0) == 1;
     }
 
     public void parseFromCursor(Cursor cursor) {
@@ -81,6 +92,11 @@ public class POSInfo implements Serializable {
 
         if (cursor.getExtras() != null)
             merchantData.parseFromBundle(cursor.getExtras());
+
+
+        if (cursor.getColumnIndex("ReleaseMode") > -1)
+            isReleaseBuild = cursor.getInt(cursor.getColumnIndex("ReleaseMode")) == 1;
+
     }
 
     @Override
@@ -90,6 +106,7 @@ public class POSInfo implements Serializable {
                 ", currencyName='" + currencyName + "'\n" +
                 ", currencyCode='" + currencyCode + "'\n" +
                 ", merchantData='" + merchantData.toString() + "'\n" +
+                ", releaseMode='" + isReleaseBuild + "'\n" +
                 '}';
     }
 }
