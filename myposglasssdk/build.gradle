@@ -2,8 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: "com.jfrog.bintray"
 
-def versionNumber = 2
-def versionString = "1.0.1"
+def versionNumber = 3
+def versionString = "1.0.2"
 
 ext {
     bintrayRepo = 'myPOSGlassSDK'

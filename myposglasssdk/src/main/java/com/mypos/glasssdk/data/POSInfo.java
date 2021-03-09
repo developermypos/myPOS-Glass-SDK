@@ -93,7 +93,6 @@ public class POSInfo implements Serializable {
         if (cursor.getExtras() != null)
             merchantData.parseFromBundle(cursor.getExtras());
 
-
         if (cursor.getColumnIndex("ReleaseMode") > -1)
             isReleaseBuild = cursor.getInt(cursor.getColumnIndex("ReleaseMode")) == 1;
 
