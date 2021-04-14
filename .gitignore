@@ -6,3 +6,10 @@
 /build
 /captures
 .externalNativeBuild
+gradle.properties
+myposglasssdk/myPOS_0xC88C23B3_SECRET.gpg
+gradle.properties
+*.properties
+gradle.properties
+gradle.properties
+gradle.properties
