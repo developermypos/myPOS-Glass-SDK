@@ -28,7 +28,7 @@ Add the repository to your gradle dependencies:
 ```java
 allprojects {
    repositories {
-      jcenter()
+      mavenCentral()
    }
 }
 ```
@@ -36,7 +36,7 @@ allprojects {
 Add the dependency to a module:
 
 ```java
-implementation 'com.mypos:glasssdk:1.0.1'
+implementation 'com.mypos:glasssdk:1.0.3'
 ```
 
 # Usage
