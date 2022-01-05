@@ -21,6 +21,9 @@ No sensitive card data is ever passed through or stored on the smart device. All
   
 * [Response](#response)
 
+* [Deep Links API](#deep-links-api)
+
+
 ## Installation
 
 Add the repository to your gradle dependencies:
@@ -292,3 +295,34 @@ When a transaction has finished, an Intent with the following data is returned t
 Note 1: Unless noted, extras in the bundle are Strings.
 
 Note 2: Depending on the card and transaction type, some of the extras are not always present.
+
+# Deep Links API
+
+This API gives its user the option to deep-link their website to take in-person payments via the myPOS Glass app.
+
+[Full API Documentation](https://developers.mypos.eu/en/doc/in_person_payments/v1_0/395-deep-links-api)
+
+
+##### 1. Perform the payment
+
+If you want to execute payment from а web page, you`ll need to add this URL to your website.
+
+Example:
+
+```html
+ <a href="myposapi://glass/1.0?action=com.mypos.transaction.START_TRANSACTION&request_code=101&amount=1.23&currency=EUR&app_id=yourwebsite.com&app_version=1.0.0&foreign_transaction_id=123test321&callback=https://www.yourwebsite.com/myposglassendpoint">Start myPOS Payment</a>
+```
+
+##### Handle the result
+
+Make sure that the callback URL you provide is correct and controlled by you.
+
+
+Example of Approved transaction:
+
+{CALLBACK_URL}?status=0&status_text=TRANSACTION_SUCCESS&transaction_approved=true&foreign_transaction_id=123test321&stan=6&date_time=211123172012&authorization_code=074114
+
+
+Example of Declined transaction:
+
+{CALLBACK_URL}?status=2&status_text=TRANSACTION_DECLINED&transaction_approved=false&foreign_transaction_id=123test321
