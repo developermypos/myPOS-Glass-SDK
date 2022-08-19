@@ -2,6 +2,7 @@ package com.mypos.glasssdk;
 
 
 import com.mypos.glasssdk.exceptions.InvalidAmountException;
+import com.mypos.glasssdk.exceptions.InvalidEReceiptReceiverException;
 import com.mypos.glasssdk.exceptions.InvalidOperatorCodeExcepton;
 import com.mypos.glasssdk.exceptions.InvalidReferenceNumberException;
 import com.mypos.glasssdk.exceptions.InvalidReferenceTypeException;
@@ -22,6 +23,7 @@ public class MyPOSPayment extends MyPOSBase<MyPOSPayment> {
     private int         referenceType;
     private boolean     mastercardSonicBranding;
     private boolean     visaSensoryBranding;
+    private String      eReceiptReceiver;
 
 
     MyPOSPayment(Builder builder) {
@@ -35,6 +37,7 @@ public class MyPOSPayment extends MyPOSBase<MyPOSPayment> {
         this.referenceType = builder.referenceType;
         this.mastercardSonicBranding = builder.mastercardSonicBranding;
         this.visaSensoryBranding = builder.visaSensoryBranding;
+        this.eReceiptReceiver = builder.eReceiptReceiver;
     }
 
 
@@ -105,6 +108,15 @@ public class MyPOSPayment extends MyPOSBase<MyPOSPayment> {
         return this;
     }
 
+    public String getEReceiptReceiver() {
+        return eReceiptReceiver;
+    }
+
+    public MyPOSPayment setEReceiptReceiver(String eReceiptReceiver) {
+        this.eReceiptReceiver = eReceiptReceiver;
+        return this;
+    }
+
     public String getReferenceNumber() {
         return referenceNumber;
     }
@@ -129,6 +141,7 @@ public class MyPOSPayment extends MyPOSBase<MyPOSPayment> {
         private int         referenceType;
         private boolean     mastercardSonicBranding = true;
         private boolean     visaSensoryBranding = true;
+        private String      eReceiptReceiver;
 
         public Builder productAmount(Double productAmount) {
             this.productAmount = productAmount;
@@ -171,6 +184,11 @@ public class MyPOSPayment extends MyPOSBase<MyPOSPayment> {
             return this;
         }
 
+        public Builder eReceiptReceiver(String eReceiptReceiver) {
+            this.eReceiptReceiver = eReceiptReceiver;
+            return this;
+        }
+
         public MyPOSPayment build() throws InvalidAmountException, InvalidTipAmountException, MissingCurrencyException, InvalidOperatorCodeExcepton, InvalidReferenceTypeException, InvalidReferenceNumberException {
             if (this.productAmount == null || this.productAmount <= 0.0D) {
                 throw new InvalidAmountException("Invalid or missing amount");
@@ -210,6 +228,9 @@ public class MyPOSPayment extends MyPOSBase<MyPOSPayment> {
             }
             if(ReferenceType.isEnabled(referenceType) && !MyPOSUtil.isReferenceNumberValid(referenceNumber)) {
                 throw new InvalidReferenceNumberException("incorrect reference number");
+            }
+            if(eReceiptReceiver != null && !MyPOSUtil.isEmailValid(eReceiptReceiver) && !MyPOSUtil.isMobileNumberValid(eReceiptReceiver)) {
+                throw new InvalidEReceiptReceiverException("e-receipt receiver is not valid");
             }
 
             return new MyPOSPayment(this);

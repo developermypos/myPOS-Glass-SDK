@@ -1,5 +1,10 @@
 package com.mypos.glasssdk;
 
+import android.util.Patterns;
+
+import java.nio.charset.Charset;
+import java.util.regex.Pattern;
+
 public class MyPOSUtil {
     /**
      * Used to start a transaction.
@@ -14,6 +19,14 @@ public class MyPOSUtil {
 
     public static final String GET_SIMPLE_POS_INFO                       = "com.mypos.action.GET_SIMPLE_POS_INFO";
     public static final String GET_SIMPLE_POS_INFO_RESPONSE              = "com.mypos.broadcast.exported.SIMPLE_POS_INFO_RESPONSE";
+
+    public static final String INTENT_PRINT_MERCHANT_RECEIPT             = "print_merchant_receipt";
+    public static final String INTENT_PRINT_CUSTOMER_RECEIPT             = "print_customer_receipt";
+    public static final int RECEIPT_ON = 1;
+    public static final int RECEIPT_OFF = 2;
+    public static final int RECEIPT_AFTER_CONFIRMATION = 3;
+    public static final int RECEIPT_E_RECEIPT = 4;
+
 
     /**
      * Used to pass the transaction amount to the Payment core
@@ -49,6 +62,8 @@ public class MyPOSUtil {
     public static final String INTENT_REFERENCE_NUMBER_TYPE      = "reference_number_type";
     public static final String INTENT_ENABLE_MASTERCARD_SONIC    = "enable_mastercard_sonic";
     public static final String INTENT_ENABLE_VISA_SENSORY        = "enable_visa_sensory";
+    public static final String INTENT_E_RECEIPT_RECEIVER         = "receipt_receiver";
+
 
     public static final String INTENT_VOID_STAN                            = "STAN";
     public static final String INTENT_VOID_AUTH_CODE                       = "authorization_code";
@@ -71,4 +86,25 @@ public class MyPOSUtil {
         return referenceNumber == null || (referenceNumber.length() <= 50 && referenceNumber.matches("[a-zA-Z0-9\\p{Punct}]+"));
     }
 
+    public static boolean isBasicLatin(String text) {
+        byte[] bytes = text.getBytes(Charset.forName("UTF-8"));
+        for (byte b : bytes) {
+            if (b < 32) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean isEmailValid(String email) {
+        if (!isBasicLatin(email)) return false;
+        if (email.length() > 50) return false;
+        if (!Pattern.matches("[_a-z0-9A-Z-]+(\\.[_a-z0-9A-Z-]+)*@[_a-z0-9A-Z-]+(\\.[_a-z0-9A-Z-]+)*(\\.[a-zA-Z]+)", email)) return false;
+        return true;
+        //return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    public static boolean isMobileNumberValid(String mobileNumber) {
+        return Patterns.PHONE.matcher(mobileNumber).matches() && (mobileNumber.startsWith("+") || mobileNumber.startsWith("0"));
+    }
 }
