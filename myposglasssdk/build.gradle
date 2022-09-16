@@ -2,8 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.bmuschko.nexus'
 
-def versionNumber = 3
-def versionString = "1.0.2"
+def versionNumber = 5
+def versionString = "1.0.4"
 
 ext {
     bintrayRepo = 'myPOSGlassSDK'
@@ -43,6 +43,7 @@ android {
         version versionString
         versionName versionString
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        archivesBaseName = artifact // changing library artifact id
     }
     buildTypes {
         release {
@@ -59,6 +60,10 @@ android {
 //                output.outputFile = new File(outputFile.parent, fileName)
             }
         }
+    }
+
+    lintOptions {
+        abortOnError false
     }
 }
 
@@ -134,6 +139,7 @@ modifyPom {
         description libraryDescription
         url siteUrl
         inceptionYear '2021'
+        artifactId artifact
 
         scm {
             url siteUrl
