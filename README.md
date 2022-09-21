@@ -39,7 +39,7 @@ allprojects {
 Add the dependency to a module:
 
 ```java
-implementation 'com.mypos:glasssdk:1.0.3'
+implementation 'com.mypos:glasssdk:1.0.4'
 ```
 
 # Usage
@@ -91,6 +91,11 @@ MyPOSAPI.registerPOSInfo(MainActivity.this, new OnPOSInfoListener() {
 	 // card scheme brandnig
 	 .mastercardSonicBranding(true)
 	 .visaSensoryBranding(true)
+	 // Set receipt mode if printer is paired
+	 .printMerchantReceipt(MyPOSUtil.RECEIPT_ON) // possible options RECEIPT_ON, RECEIPT_OFF
+	 .printCustomerReceipt(MyPOSUtil.RECEIPT_ON) // possible options RECEIPT_ON, RECEIPT_OFF, RECEIPT_AFTER_CONFIRMATION, RECEIPT_E_RECEIPT
+	 //set email or phone e-receipt receiver, works with customer receipt configuration RECEIPT_E_RECEIPT or RECEIPT_AFTER_CONFIRMATION
+	 .eReceiptReceiver(examplename@example.com)
          .build();
 	 
  // Start the transaction
@@ -158,6 +163,11 @@ MyPOSRefund refund = MyPOSRefund.builder()
         .refundAmount(1.23)
         .currency(Currency.EUR)
         .foreignTransactionId(UUID.randomUUID().toString())
+	// Set receipt mode if printer is paired
+	.printMerchantReceipt(MyPOSUtil.RECEIPT_ON) // possible options RECEIPT_ON, RECEIPT_OFF
+	.printCustomerReceipt(MyPOSUtil.RECEIPT_ON) // possible options RECEIPT_ON, RECEIPT_OFF, RECEIPT_AFTER_CONFIRMATION, RECEIPT_E_RECEIPT
+	//set email or phone e-receipt receiver, works with customer receipt configuration RECEIPT_E_RECEIPT or RECEIPT_AFTER_CONFIRMATION
+	.eReceiptReceiver(examplename@example.com)
         .build();
 
 // Start the transaction
