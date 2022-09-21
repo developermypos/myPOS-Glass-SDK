@@ -37,6 +37,8 @@ public class MyPOSBase<D extends MyPOSBase> implements Serializable {
 
     protected MyPOSBase(BaseBuilder builder) {
         this.foreignTransactionId = builder.foreignTransactionId;
+        this.printMerchantReceipt = builder.printMerchantReceipt;
+        this.printCustomerReceipt = builder.printCustomerReceipt;
     }
 
     public static BaseBuilder builder() {

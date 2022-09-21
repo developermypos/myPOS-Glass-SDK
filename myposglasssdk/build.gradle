@@ -2,8 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.bmuschko.nexus'
 
-def versionNumber = 5
-def versionString = "1.0.4"
+def versionNumber = 6
+def versionString = "1.0.5"
 
 ext {
     bintrayRepo = 'myPOSGlassSDK'
