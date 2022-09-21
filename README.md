@@ -221,6 +221,9 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
                 .STAN(27)
                 .authCode("VISSIM")
                 .dateTime("180129123753")
+		// Set receipt mode if printer is paired
+		.printMerchantReceipt(MyPOSUtil.RECEIPT_ON) // possible options RECEIPT_ON, RECEIPT_OFF
+		.printCustomerReceipt(MyPOSUtil.RECEIPT_ON) // possible options RECEIPT_ON, RECEIPT_OFF, RECEIPT_AFTER_CONFIRMATION
 		//.voidLastTransactionFlag(true) // this may void last transaction initialized by this terminal
                 .build();
 				
@@ -235,29 +238,29 @@ The same as with the payment, in your calling Activity, override the ``onActivit
 
 ```java
 @Override
-	void onActivityResult(int requestCode, int resultCode, Intent data) {
-	    if (requestCode == VOID_REQUEST_CODE) {
-			// The transaction was processed, handle the response
-			if (resultCode == RESULT_OK) {
-				// Something went wrong in the Payment core app and the result couldn't be returned properly
-				if (data == null) {
-					Toast.makeText(this, "Transaction cancelled", Toast.LENGTH_SHORT).show();
-					return;
-				}
-				int transactionResult = data.getIntExtra("status", TransactionProcessingResult.TRANSACTION_FAILED);
-
-				Toast.makeText(this, "Void transaction has completed. Result: " + transactionResult, Toast.LENGTH_SHORT).show();
-
-				// TODO: handle each transaction response accordingly
-				if (transactionResult == TransactionProcessingResult.TRANSACTION_SUCCESS) {
-					// Transaction is successful
-				}
-			} else {
-				// The user cancelled the transaction
-				Toast.makeText(this, "Transaction cancelled", Toast.LENGTH_SHORT).show();
-			}
+protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    if (requestCode == VOID_REQUEST_CODE) {
+	// The transaction was processed, handle the response
+	if (resultCode == RESULT_OK) {
+		// Something went wrong in the Payment core app and the result couldn't be returned properly
+		if (data == null) {
+			Toast.makeText(this, "Transaction cancelled", Toast.LENGTH_SHORT).show();
+			return;
 		}
+		int transactionResult = data.getIntExtra("status", TransactionProcessingResult.TRANSACTION_FAILED);
+
+		Toast.makeText(this, "Void transaction has completed. Result: " + transactionResult, Toast.LENGTH_SHORT).show();
+
+		// TODO: handle each transaction response accordingly
+		if (transactionResult == TransactionProcessingResult.TRANSACTION_SUCCESS) {
+			// Transaction is successful
+		}
+	} else {
+		// The user cancelled the transaction
+		Toast.makeText(this, "Transaction cancelled", Toast.LENGTH_SHORT).show();
+	}
     }
+}
 ```
 
 ### Response
