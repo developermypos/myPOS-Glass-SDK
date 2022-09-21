@@ -221,9 +221,9 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
                 .STAN(27)
                 .authCode("VISSIM")
                 .dateTime("180129123753")
-		// Set receipt mode if printer is paired
-		.printMerchantReceipt(MyPOSUtil.RECEIPT_ON) // possible options RECEIPT_ON, RECEIPT_OFF
-		.printCustomerReceipt(MyPOSUtil.RECEIPT_ON) // possible options RECEIPT_ON, RECEIPT_OFF, RECEIPT_AFTER_CONFIRMATION
+                // Set receipt mode if printer is paired
+                .printMerchantReceipt(MyPOSUtil.RECEIPT_ON) // possible options RECEIPT_ON, RECEIPT_OFF
+                .printCustomerReceipt(MyPOSUtil.RECEIPT_ON) // possible options RECEIPT_ON, RECEIPT_OFF, RECEIPT_AFTER_CONFIRMATION
 		//.voidLastTransactionFlag(true) // this may void last transaction initialized by this terminal
                 .build();
 				
