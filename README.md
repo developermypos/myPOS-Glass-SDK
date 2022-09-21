@@ -95,7 +95,7 @@ MyPOSAPI.registerPOSInfo(MainActivity.this, new OnPOSInfoListener() {
 	 .printMerchantReceipt(MyPOSUtil.RECEIPT_ON) // possible options RECEIPT_ON, RECEIPT_OFF
 	 .printCustomerReceipt(MyPOSUtil.RECEIPT_ON) // possible options RECEIPT_ON, RECEIPT_OFF, RECEIPT_AFTER_CONFIRMATION, RECEIPT_E_RECEIPT
 	 //set email or phone e-receipt receiver, works with customer receipt configuration RECEIPT_E_RECEIPT or RECEIPT_AFTER_CONFIRMATION
-	 .eReceiptReceiver(examplename@example.com)
+	 .eReceiptReceiver("examplename@example.com")
          .build();
 	 
  // Start the transaction
@@ -167,7 +167,7 @@ MyPOSRefund refund = MyPOSRefund.builder()
 	.printMerchantReceipt(MyPOSUtil.RECEIPT_ON) // possible options RECEIPT_ON, RECEIPT_OFF
 	.printCustomerReceipt(MyPOSUtil.RECEIPT_ON) // possible options RECEIPT_ON, RECEIPT_OFF, RECEIPT_AFTER_CONFIRMATION, RECEIPT_E_RECEIPT
 	//set email or phone e-receipt receiver, works with customer receipt configuration RECEIPT_E_RECEIPT or RECEIPT_AFTER_CONFIRMATION
-	.eReceiptReceiver(examplename@example.com)
+	.eReceiptReceiver("examplename@example.com")
         .build();
 
 // Start the transaction
