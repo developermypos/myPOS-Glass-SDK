@@ -39,7 +39,7 @@ allprojects {
 Add the dependency to a module:
 
 ```java
-implementation 'com.mypos:glasssdk:1.0.4'
+implementation 'com.mypos:glasssdk:1.0.5'
 ```
 
 # Usage
