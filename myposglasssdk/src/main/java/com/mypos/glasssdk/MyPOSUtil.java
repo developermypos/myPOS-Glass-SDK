@@ -17,6 +17,10 @@ public class MyPOSUtil {
 
     public static final String PAYMENT_CORE_VOID_INTENT_EX               = "com.mypos.transaction.VOID_EX";
 
+    public static final String PAYMENT_CORE_ENTRY_PAYMENT_REQUEST        = "com.mypos.transaction.PAYMENT_REQUEST";
+
+    public static final String PAYMENT_CORE_ENTRY_PAYMENT_REQUEST_QR     = "com.mypos.transaction.PAYMENT_REQUEST_QR";
+
     public static final String GET_SIMPLE_POS_INFO                       = "com.mypos.action.GET_SIMPLE_POS_INFO";
     public static final String GET_SIMPLE_POS_INFO_RESPONSE              = "com.mypos.broadcast.exported.SIMPLE_POS_INFO_RESPONSE";
 
@@ -63,6 +67,13 @@ public class MyPOSUtil {
     public static final String INTENT_ENABLE_MASTERCARD_SONIC    = "enable_mastercard_sonic";
     public static final String INTENT_ENABLE_VISA_SENSORY        = "enable_visa_sensory";
     public static final String INTENT_E_RECEIPT_RECEIVER         = "receipt_receiver";
+    public static final String INTENT_PAYMENT_REQUEST_LANGUAGE   = "language";
+
+    public static final String INTENT_PAYMENT_REQUEST_RECIPIENT_GSM      = "recipient_gsm";
+    public static final String INTENT_PAYMENT_REQUEST_RECIPIENT_EMAIL    = "recipient_email";
+    public static final String INTENT_PAYMENT_REQUEST_EXPIRY_DAYS        = "expiry_days";
+    public static final String INTENT_PAYMENT_REQUEST_REASON             = "reason";
+    public static final String INTENT_PAYMENT_REQUEST_RECIPIENT_NAME     = "recipient_name";
 
 
     public static final String INTENT_VOID_STAN                            = "STAN";

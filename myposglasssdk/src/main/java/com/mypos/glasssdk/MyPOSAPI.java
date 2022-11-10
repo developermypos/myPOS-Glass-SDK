@@ -150,6 +150,16 @@ public class MyPOSAPI {
         startActivityForResult(activity, myposIntent, requestCode);
     }
 
+    public static void createPaymentRequest(Activity activity, MyPOSPaymentRequest paymentRequest, int requestCode) throws FunctionalityNotSupportedException {
+        Intent myposIntent = MyPOSIntents.getPaymentRequestIntent(paymentRequest);
+        startActivityForResult(activity, myposIntent, requestCode);
+    }
+
+    public static void createQRPaymentRequest(Activity activity, MyPOSQRPaymentRequest paymentRequest, int requestCode) throws FunctionalityNotSupportedException {
+        Intent myposIntent = MyPOSIntents.getQRPaymentRequestIntent(paymentRequest);
+        startActivityForResult(activity, myposIntent, requestCode);
+    }
+
     private static void startActivityForResult(Activity activity, Intent intent, int requestCode) throws FunctionalityNotSupportedException {
         try {
             activity.startActivityForResult(intent, requestCode);
