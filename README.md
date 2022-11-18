@@ -17,6 +17,8 @@ No sensitive card data is ever passed through or stored on the smart device. All
 
   * [Refund request](#refund-request)
   
+  * [Payment Request](#payment-request)
+  
   * [Void Request](#void-request)
   
 * [Response](#response)
@@ -39,7 +41,7 @@ allprojects {
 Add the dependency to a module:
 
 ```java
-implementation 'com.mypos:glasssdk:1.0.5'
+implementation 'com.mypos:glasssdk:1.0.6'
 ```
 
 # Usage
@@ -205,6 +207,80 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     }
 }
 
+```
+
+### Payment request
+This functionality allows a merchant to create QR payment request or send it as a SMS or Email directly from a myPOS Glass. 
+##### 1. Perform QR Payment Request
+
+ ```java
+ // Build the payment request transaction
+ private static final int PAYMENT_REQUEST_REQUEST_CODE = 4;
+    private void startQRPaymentRequest() {
+        // Build the payment request
+        MyPOSQRPaymentRequest paymentRequest = MyPOSQRPaymentRequest.builder()
+                .productAmount(3.55)
+                .currency(Currency.EUR)
+                .language(Language.EN)
+                .build();
+				
+        // Start the payment request transaction
+        MyPOSAPI.createQRPaymentRequest(MainActivity.this, paymentRequest, PAYMENT_REQUEST_REQUEST_CODE);
+ }
+```
+
+##### 2. Perform Payment Request
+
+ ```java
+ // Build the payment request transaction
+ private static final int PAYMENT_REQUEST_REQUEST_CODE = 4;
+    private void startPaymentRequest() {
+        // Build the payment request
+        MyPOSPaymentRequest paymentRequest = MyPOSPaymentRequest.builder()
+                .productAmount(3.55)
+                .currency(Currency.EUR)
+                .expiryDays(60)
+                .recipientName("John Doe")
+                .GSM("0899070087")
+                .eMail("")
+                .reason("System test")
+                .language(Language.EN)
+                .build();
+				
+        // Start the payment request transaction
+        MyPOSAPI.createPaymentRequest(MainActivity.this, paymentRequest, PAYMENT_REQUEST_REQUEST_CODE);
+ }
+```
+
+##### 3.  Handle the result
+
+The same as with the payment, in your calling Activity, override the ``onActivityResult`` method to handle the result of the Payment request:
+
+```java
+@Override
+	void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    if (requestCode == PAYMENT_REQUEST_REQUEST_CODE) {
+			// The transaction was processed, handle the response
+			if (resultCode == RESULT_OK) {
+				// Something went wrong in the Payment core app and the result couldn't be returned properly
+				if (data == null) {
+					Toast.makeText(this, "Transaction cancelled", Toast.LENGTH_SHORT).show();
+					return;
+				}
+				int transactionResult = data.getIntExtra("status", TransactionProcessingResult.TRANSACTION_FAILED);
+
+				Toast.makeText(this, "Payment request transaction has completed. Result: " + transactionResult, Toast.LENGTH_SHORT).show();
+
+				// TODO: handle each transaction response accordingly
+				if (transactionResult == TransactionProcessingResult.TRANSACTION_SUCCESS) {
+					// Transaction is successful
+				}
+			} else {
+				// The user cancelled the transaction
+				Toast.makeText(this, "Transaction cancelled", Toast.LENGTH_SHORT).show();
+			}
+		}
+    }
 ```
 
 ### Void Request
