@@ -15,12 +15,14 @@ No sensitive card data is ever passed through or stored on the smart device. All
 
   * [Process a checkout](#process-a-checkout)
 
-  * [Refund request](#refund-request)
+  * [Refund Request](#refund-request)
   
   * [Payment Request](#payment-request)
   
   * [Void Request](#void-request)
   
+  * [Get Last Transaction data](#get-last-transaction-data)
+    
 * [Response](#response)
 
 * [Deep Links API](#deep-links-api)
@@ -54,7 +56,7 @@ Once the SDK is added to your project, using the Payment API can be done with th
 Add this to your AndroidManifest.xml file
 ```xml
 <queries>
-	<package android:name="com.mypos.top" />
+    <package android:name="com.mypos.top" />
 </queries>
 ```
 
@@ -62,11 +64,11 @@ Here you can find simple info about myPOS terminal like	TID, currency name, curr
 
 ```java
 MyPOSAPI.registerPOSInfo(MainActivity.this, new OnPOSInfoListener() {
-            @Override
-            public void onReceive(POSInfo info) {
-                //info is received
-            }
-        });
+    @Override
+    public void onReceive(POSInfo info) {
+        //info is received
+    }
+});
 ```
 
 ### Process a checkout
@@ -76,32 +78,32 @@ MyPOSAPI.registerPOSInfo(MainActivity.this, new OnPOSInfoListener() {
 
 ```java
 // Build the payment call
- MyPOSPayment payment = MyPOSPayment.builder()
-         // Mandatory parameters
-         .productAmount(13.37)
-         .currency(Currency.EUR)
-         // Foreign transaction ID. Maximum length: 128 characters
-         .foreignTransactionId(UUID.randomUUID().toString())
-	 // Optional parameters
-	 // Enable tipping mode
-	 .tippingModeEnabled(true)
-         .tipAmount(1.55)
-	 // Operator code. Maximum length: 4 characters
-	 .operatorCode("1234")
-	 // Reference number. Maximum length: 20 alpha numeric characters
-	 .reference("asd123asd", ReferenceType.REFERENCE_NUMBER)
-	 // card scheme brandnig
-	 .mastercardSonicBranding(true)
-	 .visaSensoryBranding(true)
-	 // Set receipt mode if printer is paired
-	 .printMerchantReceipt(MyPOSUtil.RECEIPT_ON) // possible options RECEIPT_ON, RECEIPT_OFF
-	 .printCustomerReceipt(MyPOSUtil.RECEIPT_ON) // possible options RECEIPT_ON, RECEIPT_OFF, RECEIPT_AFTER_CONFIRMATION, RECEIPT_E_RECEIPT
-	 //set email or phone e-receipt receiver, works with customer receipt configuration RECEIPT_E_RECEIPT or RECEIPT_AFTER_CONFIRMATION
-	 .eReceiptReceiver("examplename@example.com")
-         .build();
+MyPOSPayment payment = MyPOSPayment.builder()
+    // Mandatory parameters
+    .productAmount(13.37)
+    .currency(Currency.EUR)
+    // Foreign transaction ID. Maximum length: 128 characters
+    .foreignTransactionId(UUID.randomUUID().toString())
+    // Optional parameters
+    // Enable tipping mode
+    .tippingModeEnabled(true)
+    .tipAmount(1.55)
+    // Operator code. Maximum length: 4 characters
+    .operatorCode("1234")
+    // Reference number. Maximum length: 20 alpha numeric characters
+    .reference("asd123asd", ReferenceType.REFERENCE_NUMBER)
+    // card scheme brandnig
+    .mastercardSonicBranding(true)
+    .visaSensoryBranding(true)
+    // Set receipt mode if printer is paired
+    .printMerchantReceipt(MyPOSUtil.RECEIPT_ON) // possible options RECEIPT_ON, RECEIPT_OFF
+    .printCustomerReceipt(MyPOSUtil.RECEIPT_ON) // possible options RECEIPT_ON, RECEIPT_OFF, RECEIPT_AFTER_CONFIRMATION, RECEIPT_E_RECEIPT
+    //set email or phone e-receipt receiver, works with customer receipt configuration RECEIPT_E_RECEIPT or RECEIPT_AFTER_CONFIRMATION
+    .eReceiptReceiver("examplename@example.com")
+    .build();
 	 
- // Start the transaction
- MyPOSAPI.openPaymentActivity(MainActivity.this, payment, 1);
+// Start the transaction
+MyPOSAPI.openPaymentActivity(MainActivity.this, payment, 1);
 ```
 
 
@@ -135,7 +137,6 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         }
     }
 }
-
 ```
 
 Checking if the transaction is approved can be done by reading the ``transaction_approved`` boolean extra from the response:
@@ -149,11 +150,10 @@ if (transaction_approved) {
     // Transaction was not approved
     // The response code is in the "response_code" string extra
 }
-
 ```
 
 
-### Refund request
+### Refund Request
 
 
 ##### 1. Perform the refund
@@ -161,16 +161,16 @@ if (transaction_approved) {
 ``` java
 // Build the refund request
 MyPOSRefund refund = MyPOSRefund.builder()
-	// Mandatoy parameters
-        .refundAmount(1.23)
-        .currency(Currency.EUR)
-        .foreignTransactionId(UUID.randomUUID().toString())
-	// Set receipt mode if printer is paired
-	.printMerchantReceipt(MyPOSUtil.RECEIPT_ON) // possible options RECEIPT_ON, RECEIPT_OFF
-	.printCustomerReceipt(MyPOSUtil.RECEIPT_ON) // possible options RECEIPT_ON, RECEIPT_OFF, RECEIPT_AFTER_CONFIRMATION, RECEIPT_E_RECEIPT
-	//set email or phone e-receipt receiver, works with customer receipt configuration RECEIPT_E_RECEIPT or RECEIPT_AFTER_CONFIRMATION
-	.eReceiptReceiver("examplename@example.com")
-        .build();
+    // Mandatoy parameters
+    .refundAmount(1.23)
+    .currency(Currency.EUR)
+    .foreignTransactionId(UUID.randomUUID().toString())
+    // Set receipt mode if printer is paired
+    .printMerchantReceipt(MyPOSUtil.RECEIPT_ON) // possible options RECEIPT_ON, RECEIPT_OFF
+    .printCustomerReceipt(MyPOSUtil.RECEIPT_ON) // possible options RECEIPT_ON, RECEIPT_OFF, RECEIPT_AFTER_CONFIRMATION, RECEIPT_E_RECEIPT
+    //set email or phone e-receipt receiver, works with customer receipt configuration RECEIPT_E_RECEIPT or RECEIPT_AFTER_CONFIRMATION
+    .eReceiptReceiver("examplename@example.com")
+    .build();
 
 // Start the transaction
 MyPOSAPI.openRefundActivity(MainActivity.this, refund, 2);
@@ -209,7 +209,7 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 ```
 
-### Payment request
+### Payment Request
 This functionality allows a merchant to create QR payment request or send it as a SMS or Email directly from a myPOS Glass. 
 ##### 1. Perform QR Payment Request
 
@@ -219,10 +219,10 @@ This functionality allows a merchant to create QR payment request or send it as 
     private void startQRPaymentRequest() {
         // Build the payment request
         MyPOSQRPaymentRequest paymentRequest = MyPOSQRPaymentRequest.builder()
-                .productAmount(3.55)
-                .currency(Currency.EUR)
-                .language(Language.EN)
-                .build();
+            .productAmount(3.55)
+            .currency(Currency.EUR)
+            .language(Language.EN)
+            .build();
 				
         // Start the payment request transaction
         MyPOSAPI.createQRPaymentRequest(MainActivity.this, paymentRequest, PAYMENT_REQUEST_REQUEST_CODE);
@@ -237,15 +237,15 @@ This functionality allows a merchant to create QR payment request or send it as 
     private void startPaymentRequest() {
         // Build the payment request
         MyPOSPaymentRequest paymentRequest = MyPOSPaymentRequest.builder()
-                .productAmount(3.55)
-                .currency(Currency.EUR)
-                .expiryDays(60)
-                .recipientName("John Doe")
-                .GSM("0899070087")
-                .eMail("")
-                .reason("System test")
-                .language(Language.EN)
-                .build();
+            .productAmount(3.55)
+            .currency(Currency.EUR)
+            .expiryDays(60)
+            .recipientName("John Doe")
+            .GSM("0899070087")
+            .eMail("")
+            .reason("System test")
+            .language(Language.EN)
+            .build();
 				
         // Start the payment request transaction
         MyPOSAPI.createPaymentRequest(MainActivity.this, paymentRequest, PAYMENT_REQUEST_REQUEST_CODE);
@@ -258,29 +258,29 @@ The same as with the payment, in your calling Activity, override the ``onActivit
 
 ```java
 @Override
-	void onActivityResult(int requestCode, int resultCode, Intent data) {
-	    if (requestCode == PAYMENT_REQUEST_REQUEST_CODE) {
-			// The transaction was processed, handle the response
-			if (resultCode == RESULT_OK) {
-				// Something went wrong in the Payment core app and the result couldn't be returned properly
-				if (data == null) {
-					Toast.makeText(this, "Transaction cancelled", Toast.LENGTH_SHORT).show();
-					return;
-				}
-				int transactionResult = data.getIntExtra("status", TransactionProcessingResult.TRANSACTION_FAILED);
+void onActivityResult(int requestCode, int resultCode, Intent data) {
+    if (requestCode == PAYMENT_REQUEST_REQUEST_CODE) {
+        // The transaction was processed, handle the response
+        if (resultCode == RESULT_OK) {
+            // Something went wrong in the Payment core app and the result couldn't be returned properly
+            if (data == null) {
+                Toast.makeText(this, "Transaction cancelled", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            int transactionResult = data.getIntExtra("status", TransactionProcessingResult.TRANSACTION_FAILED);
 
-				Toast.makeText(this, "Payment request transaction has completed. Result: " + transactionResult, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Payment request transaction has completed. Result: " + transactionResult, Toast.LENGTH_SHORT).show();
 
-				// TODO: handle each transaction response accordingly
-				if (transactionResult == TransactionProcessingResult.TRANSACTION_SUCCESS) {
-					// Transaction is successful
-				}
-			} else {
-				// The user cancelled the transaction
-				Toast.makeText(this, "Transaction cancelled", Toast.LENGTH_SHORT).show();
-			}
-		}
-    }
+            // TODO: handle each transaction response accordingly
+            if (transactionResult == TransactionProcessingResult.TRANSACTION_SUCCESS) {
+                // Transaction is successful
+            }
+        } else {
+            // The user cancelled the transaction
+            Toast.makeText(this, "Transaction cancelled", Toast.LENGTH_SHORT).show();
+        }
+	}
+}
 ```
 
 ### Void Request
@@ -294,17 +294,17 @@ The same as with the payment, in your calling Activity, override the ``onActivit
     private void startVoid() {
         // Build the void request
         MyPOSVoid voidEx = MyPOSVoid.builder()
-                .STAN(27)
-                .authCode("VISSIM")
-                .dateTime("180129123753")
-                // Set receipt mode if printer is paired
-                .printMerchantReceipt(MyPOSUtil.RECEIPT_ON) // possible options RECEIPT_ON, RECEIPT_OFF
-                .printCustomerReceipt(MyPOSUtil.RECEIPT_ON) // possible options RECEIPT_ON, RECEIPT_OFF, RECEIPT_AFTER_CONFIRMATION
-		//.voidLastTransactionFlag(true) // this may void last transaction initialized by this terminal
-                .build();
-				
-		// Start the void transaction
-		MyPOSAPI.openVoidActivity(MainActivity.this, voidEx, VOID_REQUEST_CODE, true);
+            .STAN(27)
+            .authCode("VISSIM")
+            .dateTime("180129123753")
+            // Set receipt mode if printer is paired
+            .printMerchantReceipt(MyPOSUtil.RECEIPT_ON) // possible options RECEIPT_ON, RECEIPT_OFF
+            .printCustomerReceipt(MyPOSUtil.RECEIPT_ON) // possible options RECEIPT_ON, RECEIPT_OFF, RECEIPT_AFTER_CONFIRMATION
+	    //.voidLastTransactionFlag(true) // this may void last transaction initialized by this terminal
+            .build();
+	    		
+	// Start the void transaction
+	MyPOSAPI.openVoidActivity(MainActivity.this, voidEx, VOID_REQUEST_CODE, true);
     }
 ```
 
@@ -318,32 +318,84 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     if (requestCode == VOID_REQUEST_CODE) {
 	// The transaction was processed, handle the response
 	if (resultCode == RESULT_OK) {
-		// Something went wrong in the Payment core app and the result couldn't be returned properly
-		if (data == null) {
-			Toast.makeText(this, "Transaction cancelled", Toast.LENGTH_SHORT).show();
-			return;
-		}
-		int transactionResult = data.getIntExtra("status", TransactionProcessingResult.TRANSACTION_FAILED);
+	    // Something went wrong in the Payment core app and the result couldn't be returned properly
+	    if (data == null) {
+	    	Toast.makeText(this, "Transaction cancelled", Toast.LENGTH_SHORT).show();
+	    	return;
+	    }
+	    int transactionResult = data.getIntExtra("status", TransactionProcessingResult.TRANSACTION_FAILED);
 
-		Toast.makeText(this, "Void transaction has completed. Result: " + transactionResult, Toast.LENGTH_SHORT).show();
+	    Toast.makeText(this, "Void transaction has completed. Result: " + transactionResult, Toast.LENGTH_SHORT).show();
 
-		// TODO: handle each transaction response accordingly
-		if (transactionResult == TransactionProcessingResult.TRANSACTION_SUCCESS) {
-			// Transaction is successful
-		}
+	    // TODO: handle each transaction response accordingly
+	    if (transactionResult == TransactionProcessingResult.TRANSACTION_SUCCESS) {
+	    	// Transaction is successful
+	    }
 	} else {
-		// The user cancelled the transaction
-		Toast.makeText(this, "Transaction cancelled", Toast.LENGTH_SHORT).show();
+	    // The user cancelled the transaction
+	    Toast.makeText(this, "Transaction cancelled", Toast.LENGTH_SHORT).show();
 	}
     }
 }
+```
+
+### Get Last Transaction data
+
+```java
+final Uri CONTENT_URI = Uri.parse("content://com.mypos.providers.LastTransactionProvider/last_transaction");
+
+Cursor cursor = getContentResolver().query(
+    CONTENT_URI,
+    new String[] { // projection parameters you want to receive in response. Choose only the needed ones
+        "amount",
+        "currency",
+        "reference_number",
+        "reference_number_type",
+        "operator_code",
+        "response_code",
+        "stan",
+        "date_time",
+        "authorization_code",
+        "card_brand",
+        "transaction_approved",
+        "cvm",
+        "transaction_type",
+        "rrn"
+    },
+    null,
+    null,
+    null
+);
+
+if (cursor == null)
+    return; // there is no last transaction recorded
+    
+cursor.moveToFirst();
+
+double amount               = cursor.getDouble(cursor.getColumnIndex("amount"));
+String currency             = cursor.getString(cursor.getColumnIndex("currency"));
+String referenceNumber      = cursor.getString(cursor.getColumnIndex("reference_number"));
+int referenceNumberType     = cursor.getInt(cursor.getColumnIndex("reference_number_type"));
+String operatorCode         = cursor.getString(cursor.getColumnIndex("operator_code"));
+String responseCode         = cursor.getString(cursor.getColumnIndex("response_code"));
+String stan                 = cursor.getString(cursor.getColumnIndex("stan"));
+String dateTime             = cursor.getString(cursor.getColumnIndex("date_time"));
+String authorizationCode    = cursor.getString(cursor.getColumnIndex("authorization_code"));
+String cardBrand            = cursor.getString(cursor.getColumnIndex("card_brand"));
+boolean transactionApproved = cursor.getInt(cursor.getColumnIndex("transaction_approved")) == 1;
+String cvm                  = cursor.getString(cursor.getColumnIndex("cvm"));
+String transactionType      = cursor.getString(cursor.getColumnIndex("transaction_type"));
+String rrn                  = cursor.getString(cursor.getColumnIndex("rrn"));
+
+if(!cursor.isClosed())
+    cursor.close();
 ```
 
 ### Response
 
 When a transaction has finished, an Intent with the following data is returned to the calling Activity:
 
-* reference_number - Internal myPOS reference number for the transaction
+* rrn - Internal myPOS reference number for the transaction
 * cardholder_name - Emboss name on the card
 * date_time - Date and time of the transaction formatted as YYMMDDHHmmss
 * status (int) - one of the constants in the [TransactionProcessingResult](myposglasssdk/src/main/java/com/mypos/glasssdk/TransactionProcessingResult.java) class
