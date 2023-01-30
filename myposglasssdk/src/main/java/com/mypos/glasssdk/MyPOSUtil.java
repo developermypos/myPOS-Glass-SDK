@@ -94,7 +94,7 @@ public class MyPOSUtil {
     public static final int TRANSACTION_TYPE_REFUND  = 103;
 
     public static boolean isReferenceNumberValid(String referenceNumber) {
-        return referenceNumber == null || (referenceNumber.length() <= 50 && referenceNumber.matches("[a-zA-Z0-9\\p{Punct}]+"));
+        return referenceNumber == null || (referenceNumber.length() <= 50 && referenceNumber.matches("[a-zA-Z0-9\\p{Punct}\\s]+"));
     }
 
     public static boolean isBasicLatin(String text) {
