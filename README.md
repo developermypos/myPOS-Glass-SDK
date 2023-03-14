@@ -90,7 +90,7 @@ MyPOSPayment payment = MyPOSPayment.builder()
     .tipAmount(1.55)
     // Operator code. Maximum length: 4 characters
     .operatorCode("1234")
-    // Reference number. Maximum length: 20 alpha numeric characters
+    // Reference number. Maximum length: 50 alpha numeric characters
     .reference("asd123asd", ReferenceType.REFERENCE_NUMBER)
     // card scheme brandnig
     .mastercardSonicBranding(true)
