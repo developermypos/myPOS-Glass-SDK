@@ -395,8 +395,8 @@ if(!cursor.isClosed())
 
 When a transaction has finished, an Intent with the following data is returned to the calling Activity:
 
-* rrn - Internal myPOS reference number for the transaction
-* cardholder_name - Emboss name on the card
+* rrn - Internal myPOS reference number for the transaction. **DEPRECATED IN myPOS GLASS v2.0.0**
+* cardholder_name - Emboss name on the card. **DEPRECATED IN myPOS GLASS v2.0.0**
 * date_time - Date and time of the transaction formatted as YYMMDDHHmmss
 * status (int) - one of the constants in the [TransactionProcessingResult](myposglasssdk/src/main/java/com/mypos/glasssdk/TransactionProcessingResult.java) class
 * status_text - a textual representation of the status
